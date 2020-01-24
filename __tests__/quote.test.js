@@ -15,9 +15,10 @@ describe('app routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  let quote;
   beforeEach(async() => {
-    quote = await Quote.create({ quote: 'This is a quote' });
+    await Quote.create({ quote: 'This is a quote 1' });
+    await Quote.create({ quote: 'This is a quote 2' });
+    await Quote.create({ quote: 'This is a quote 3' });
   });
 
   afterAll(() => {
@@ -41,11 +42,11 @@ describe('app routes', () => {
 
     it('can get a random quote', () => {
       return request(app)
-        .get('/api/v1/quote/')
+        .get('/api/v1/quotes')
         .then(res => {
           expect(res.body).toEqual({
             _id: expect.any(String),
-            text: expect.any(String),
+            quote: expect.any(String),
             __v: 0
           });
         });
