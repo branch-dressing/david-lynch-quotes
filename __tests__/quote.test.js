@@ -15,9 +15,10 @@ describe('app routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  // beforeEach(async() => {
-  //   await Text.create({ text: 'This is text' });
-  // });
+  let quote;
+  beforeEach(async() => {
+    quote = await Quote.create({ quote: 'This is a quote' });
+  });
 
   afterAll(() => {
     return mongoose.connection.close();
@@ -38,17 +39,17 @@ describe('app routes', () => {
         });
     });
 
-    // it('can get all texts', () => {
-    //   return request(app)
-    //     .get('/api/v1/texts')
-    //     .then(res => {
-    //       expect(res.body).toEqual([{
-    //         _id: expect.any(String),
-    //         text: 'This is text',
-    //         __v: 0
-    //       }]);
-    //     });
-    // });
+    it('can get a random quote', () => {
+      return request(app)
+        .get('/api/v1/quote/')
+        .then(res => {
+          expect(res.body).toEqual({
+            _id: expect.any(String),
+            text: expect.any(String),
+            __v: 0
+          });
+        });
+    });
 
 
   });
